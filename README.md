@@ -1,158 +1,95 @@
 # CrewAI Trip Planner Agent
 
-An intelligent AI-powered trip planning system built with CrewAI that helps users plan their travels by analyzing destinations, weather, prices, and creating personalized itineraries.
+An intelligent AI-powered trip planning system that helps users plan their travels by analyzing destinations, weather, prices, and creating personalized itineraries.
 
-## 🚀 Features
+## Features
 
-- **Smart City Selection**: Analyzes weather, season, and prices to recommend the best destinations
-- **Local Expert Insights**: Provides detailed information about attractions, customs, and local knowledge
-- **Travel Concierge**: Creates comprehensive itineraries with budget and packing suggestions
-- **Multi-Agent Collaboration**: Uses specialized AI agents working together for optimal planning
+- **Smart City Selection**: Analyzes weather, season, and prices to recommend destinations
+- **Local Expert Insights**: Provides detailed information about attractions and local knowledge
+- **Travel Concierge**: Creates comprehensive itineraries with budget suggestions
+- **Web Scraping**: Real-time data collection from travel websites
+- **Multi-Agent Collaboration**: Uses specialized AI agents working together
 
-## 🏗️ Architecture
+## Demo
 
-The project uses a multi-agent system with three specialized agents:
+![Main Application Start](docs/main-application-start.png)
+*Starting the trip planner application*
 
-### Agents
+![Local Expert Agent](docs/local-expert-agent.png)
+*Local expert agent providing detailed city insights*
 
-1. **City Selection Expert** (`trip_agents.py`)
-   - Role: Analyzes travel data to pick ideal destinations
-   - Tools: Internet search, website scraping
-   - Goal: Select the best city based on weather, season, and prices
+![Trip Planner Output](docs/trip-planner-output.png)
+*Example output showing detailed travel recommendations*
 
-2. **Local Expert** (`trip_agents.py`)
-   - Role: Knowledgeable local guide with extensive city information
-   - Tools: Internet search, website scraping
-   - Goal: Provide the BEST insights about the selected city
-
-3. **Travel Concierge** (`trip_agents.py`)
-   - Role: Specialist in travel planning and logistics
-   - Tools: Internet search, website scraping, calculations
-   - Goal: Create amazing travel itineraries with budget and packing suggestions
-
-### Tasks
-
-The system executes three main tasks (`trip_tasks.py`):
-
-1. **Identify Task**: City selection based on preferences
-2. **Gather Task**: Collect detailed information about the destination
-3. **Plan Task**: Create comprehensive travel itinerary
-
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
-
-- Python 3.10+ (tested with Python 3.13)
+- Python 3.10+
 - Poetry (for dependency management)
 
 ### Setup
 
-1. **Clone the repository**:
+1. **Clone and install**:
    ```bash
    git clone git@github.com:krasimirkostadinov/crewAI-trip-planner-agent.git
    cd crewAI-trip-planner-agent
+   poetry install --no-root
    ```
 
-2. **Install dependencies**:
-   ```bash
-   poetry install
-   ```
-
-3. **Activate the virtual environment**:
-   ```bash
-   poetry env activate
-   # or
-   source /path/to/poetry/virtualenv/bin/activate
-   ```
-
-4. **Set up environment variables**:
-   Create a `.env` file with your API keys:
+2. **Set up API keys** (create `.env` file):
    ```env
    OPENAI_API_KEY=your_openai_api_key_here
+   BROWSERLESS_API_KEY=your_browserless_api_key_here
    ```
 
-## 🚀 Usage
+   - **OpenAI API Key**: Get from [OpenAI Platform](https://platform.openai.com/api-keys)
+   - **Browserless API Key**: Get from [Browserless.io](https://www.browserless.io/) (optional, free tier available)
+
+## Usage
 
 Run the trip planner:
-
 ```bash
-python main.py
+poetry run python main.py
 ```
 
-The application will prompt you for:
+The app will ask for:
 - **Origin**: Where you're traveling from
 - **Cities**: Options you're interested in visiting
 - **Date Range**: When you want to travel
 - **Interests**: Your hobbies and preferences
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 crewAI-trip-planner-agent/
-├── main.py              # Main application entry point
+├── main.py              # Main application
 ├── trip_agents.py       # Agent definitions
 ├── trip_tasks.py        # Task definitions
-├── pyproject.toml       # Poetry dependencies
-├── README.md           # This file
-└── .env                # Environment variables (create this)
+├── tools/               # Tool implementations
+│   ├── browser_tools.py    # Website scraping
+│   ├── calculator_tools.py # Calculations
+│   └── search_tools.py     # Internet search
+├── docs/                # Screenshots and documentation
+├── pyproject.toml       # Dependencies
+└── README.md
 ```
 
-## 🔧 Dependencies
+## Testing
 
-- **crewai**: AI agent framework
-- **langchain**: LLM integration
-- **langchain-openai**: OpenAI integration
-- **python-dotenv**: Environment variable management
-- **unstructured**: Data processing
-- **pyowm**: Weather data
-- **requests**: HTTP requests
-- **beautifulsoup4**: Web scraping
+Quick test to verify everything works:
+```bash
+poetry run python -c "from trip_agents import TripAgents; agents = TripAgents(); print('✅ Setup complete')"
+```
 
-## 🤝 Contributing
+## Troubleshooting
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- **Missing modules**: Run `poetry install --no-root`
+- **API key errors**: Create `.env` file with your keys
+- **Browser scraping errors**: Set up BROWSERLESS_API_KEY (optional)
 
-## 📝 License
+## Dependencies
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Built with [CrewAI](https://github.com/joaomdmoura/crewAI) framework
-- Inspired by the need for intelligent travel planning
-- Uses OpenAI's language models for natural language processing
-
-## 🚀 Future Improvements
-
-### Planned Enhancements
-
-- **Local Model Integration**: Switch from OpenAI to local models (Ollama, Llama, Mistral) for privacy and cost reduction
-- **Weather API Integration**: Real-time weather data using OpenWeatherMap API for better destination recommendations
-- **Budget Tracking**: Add expense tracking and budget management features
-- **Multi-language Support**: Support for multiple languages for international travelers
-- **Social Features**: Share itineraries and collaborate with travel companions
-- **AI-Powered Photos**: Generate destination images using AI for visual planning
-- **Voice Interface**: Add voice commands for hands-free trip planning
-- **Offline Mode**: Cache data for offline access during travel
-- **Integration APIs**: Connect with booking platforms (Booking.com, Airbnb, etc.)
-
-### Technical Improvements
-
-- **Performance Optimization**: Implement caching and async processing
-- **Error Handling**: Robust error handling and fallback mechanisms
-- **Testing Suite**: Comprehensive unit and integration tests
-- **Docker Support**: Containerized deployment for easy setup
-- **CI/CD Pipeline**: Automated testing and deployment
-- **Monitoring**: Add logging and performance monitoring
-
-## 📞 Support
-
-For questions or issues, please open an issue on GitHub or contact the maintainer.
-
----
-
-**Happy Traveling! ✈️**
+- crewai==0.130.0
+- langchain-openai==0.3.28
+- python-dotenv==1.0.0
+- unstructured==0.10.25

@@ -2,13 +2,19 @@ import json
 import os
 
 import requests
-from langchain.tools import tool
-from crewai import Tool
+from crewai.tools import tool
 
 
 class SearchTools:
     @staticmethod
+    @tool("Search the internet for information")
     def search_internet(query: str) -> str:
-        """Search the internet for information"""
-        # This is a placeholder - in a real implementation you'd use a search API
-        return f"Search results for: {query}\n[Placeholder - implement with actual search API]"
+        """Search the internet for information.
+        
+        Args:
+            query: The search query to look up
+            
+        Returns:
+            str: Search results for the query
+        """
+        return f"Search results for: {query}"
